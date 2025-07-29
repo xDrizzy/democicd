@@ -1,11 +1,629 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Test</title>
+    <title>Slorane CRUSOL - Portfolio Digital</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Raleway:wght@700;800&display=swap" rel="stylesheet">
+    <style>
+        /* CSS Variables for easy customization */
+        :root {
+            --primary-accent: #6A00FF; /* Vibrant Purple */
+            --secondary-accent: #00CBA7; /* Teal/Aqua */
+            --background-light: #F0F2F5; /* Light Gray Background */
+            --background-medium: #E0E2E5; /* Slightly Darker Gray */
+            --card-bg: #FFFFFF; /* White Card Background */
+            --text-dark: #2C3E50; /* Dark Blue-Gray Text */
+            --text-muted: #7F8C8D; /* Muted Gray Text */
+            --border-color: #DCDCDC; /* Light Gray Border */
+            --shadow-subtle: rgba(0, 0, 0, 0.08);
+            --shadow-medium: rgba(0, 0, 0, 0.15);
+            --gradient-hero-start: #6A00FF;
+            --gradient-hero-end: #8A2BE2; /* Amethyst */
+        }
+
+        /* Base Reset & Global Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            line-height: 1.7;
+            color: var(--text-dark);
+            background: var(--background-light);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 40px 20px;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            width: 100%;
+            background-color: var(--card-bg);
+            border-radius: 25px;
+            box-shadow: 0 20px 60px var(--shadow-medium);
+            overflow: hidden;
+            animation: fadeInScale 1s ease-out forwards;
+            border: 1px solid var(--border-color);
+        }
+
+        /* Hero Section */
+        .hero-section {
+            background: linear-gradient(135deg, var(--gradient-hero-start), var(--gradient-hero-end));
+            color: #FFFFFF;
+            padding: 120px 40px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            border-bottom: 8px solid var(--secondary-accent);
+            box-shadow: 0 5px 20px rgba(106, 0, 255, 0.4);
+        }
+
+        .hero-section::before,
+        .hero-section::after {
+            content: '';
+            position: absolute;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            animation: floatGlow 15s infinite ease-in-out;
+            z-index: 1;
+        }
+
+        .hero-section::before {
+            width: 300px;
+            height: 300px;
+            top: -100px;
+            left: -100px;
+            animation-delay: 0s;
+        }
+
+        .hero-section::after {
+            width: 200px;
+            height: 200px;
+            bottom: -70px;
+            right: -70px;
+            animation-delay: 3s;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-title {
+            font-family: 'Raleway', sans-serif;
+            font-size: 4.8em;
+            margin-bottom: 15px;
+            letter-spacing: 2px;
+            animation: slideInTop 1s ease-out forwards;
+            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3);
+        }
+
+        .hero-subtitle {
+            font-size: 2em;
+            font-weight: 300;
+            opacity: 0.9;
+            animation: slideInBottom 1s ease-out 0.3s forwards;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .hero-description {
+            font-size: 1.3em;
+            margin-top: 30px;
+            max-width: 850px;
+            margin-left: auto;
+            margin-right: auto;
+            animation: fadeIn 1s ease-out 0.6s forwards;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        /* Content Sections */
+        .content-section {
+            padding: 70px 50px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .content-section:last-child {
+            border-bottom: none;
+        }
+
+        .section-title {
+            font-family: 'Raleway', sans-serif;
+            font-size: 3.5em;
+            color: var(--primary-accent);
+            margin-bottom: 45px;
+            text-align: center;
+            position: relative;
+            padding-bottom: 20px;
+            animation: scaleIn 0.8s ease-out forwards;
+            opacity: 0;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 120px;
+            height: 6px;
+            background-color: var(--secondary-accent);
+            border-radius: 5px;
+        }
+
+        /* About Me Section */
+        .about-text {
+            font-size: 1.2em;
+            margin-bottom: 30px;
+            text-align: justify;
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
+            animation: fadeIn 1s ease-out 0.8s forwards;
+            opacity: 0;
+            color: var(--text-dark);
+        }
+
+        .about-text strong {
+            color: var(--primary-accent);
+            font-weight: 700;
+        }
+
+        /* Skills Section */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 40px;
+            margin-top: 40px;
+        }
+
+        .skill-card {
+            background-color: var(--card-bg);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px var(--shadow-subtle);
+            text-align: center;
+            transition: transform 0.4s ease, box-shadow 0.4s ease, border-color 0.4s ease;
+            position: relative;
+            overflow: hidden;
+            animation: cardSlideUp 0.8s ease-out forwards;
+            opacity: 0;
+            border: 1px solid var(--border-color);
+            transform-style: preserve-3d; /* For 3D tilt effect */
+            perspective: 1000px;
+        }
+
+        .skill-card:nth-child(1) { animation-delay: 0.2s; }
+        .skill-card:nth-child(2) { animation-delay: 0.4s; }
+        .skill-card:nth-child(3) { animation-delay: 0.6s; }
+        .skill-card:nth-child(4) { animation-delay: 0.8s; }
+
+        .skill-card:hover {
+            transform: translateY(-15px) rotateX(3deg) rotateY(3deg); /* Subtle 3D tilt */
+            box-shadow: 0 18px 45px var(--shadow-medium);
+            border-color: var(--primary-accent);
+        }
+
+        .skill-card h3 {
+            font-family: 'Raleway', sans-serif;
+            font-size: 2em;
+            color: var(--primary-accent);
+            margin-bottom: 25px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .skill-card h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 4px;
+            background-color: var(--secondary-accent);
+            border-radius: 5px;
+        }
+
+        .skill-card ul {
+            list-style: none;
+            padding: 0;
+            text-align: left;
+            margin-top: 20px;
+        }
+
+        .skill-card ul li {
+            padding: 12px 0;
+            font-size: 1.15em;
+            color: var(--text-dark);
+            display: flex;
+            align-items: center;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .skill-card ul li:last-child {
+            border-bottom: none;
+        }
+
+        .skill-card ul li::before {
+            content: '✨'; /* Sparkle emoji for a creative touch */
+            color: var(--secondary-accent);
+            margin-right: 15px;
+            font-size: 1.4em;
+        }
+
+        /* Experience Section */
+        .experience-timeline {
+            position: relative;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 30px 0;
+        }
+
+        .experience-timeline::before {
+            content: '';
+            position: absolute;
+            width: 6px;
+            background: linear-gradient(to bottom, var(--primary-accent), var(--secondary-accent));
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -3px;
+            animation: drawLine 1.5s ease-out forwards;
+            transform: scaleY(0);
+            transform-origin: top;
+        }
+
+        .timeline-item {
+            padding: 20px 0;
+            position: relative;
+            width: 50%;
+            animation: slideInFromSide 1s ease-out forwards;
+            opacity: 0;
+        }
+
+        .timeline-item:nth-child(odd) {
+            left: 0;
+            padding-right: 70px;
+            text-align: right;
+            animation-delay: 0.3s;
+            transform: translateX(-100%); /* Initial position for animation */
+        }
+
+        .timeline-item:nth-child(even) {
+            left: 50%;
+            padding-left: 70px;
+            text-align: left;
+            animation-delay: 0.6s;
+            transform: translateX(100%); /* Initial position for animation */
+        }
+
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            background-color: var(--secondary-accent);
+            border: 6px solid var(--primary-accent);
+            top: 30px;
+            border-radius: 50%;
+            z-index: 1;
+            animation: popIn 0.5s ease-out forwards;
+            opacity: 0;
+        }
+
+        .timeline-item:nth-child(odd)::after {
+            right: -15px;
+        }
+
+        .timeline-item:nth-child(even)::after {
+            left: -15px;
+        }
+
+        .timeline-content {
+            background-color: var(--card-bg);
+            padding: 35px;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px var(--shadow-subtle);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid var(--border-color);
+        }
+
+        .timeline-content:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 12px 35px var(--shadow-medium);
+        }
+
+        .timeline-content h3 {
+            font-family: 'Raleway', sans-serif;
+            font-size: 1.8em;
+            color: var(--primary-accent);
+            margin-bottom: 10px;
+        }
+
+        .timeline-content h4 {
+            font-size: 1.3em;
+            color: var(--text-dark);
+            margin-bottom: 12px;
+        }
+
+        .timeline-content .date {
+            font-size: 1.05em;
+            color: var(--text-muted);
+            margin-bottom: 18px;
+            display: block;
+        }
+
+        .timeline-content p {
+            font-size: 1.1em;
+            color: var(--text-dark);
+            text-align: justify;
+        }
+
+        /* Animations */
+        @keyframes fadeInScale {
+            from { opacity: 0; transform: scale(0.97); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        @keyframes slideInTop {
+            from { opacity: 0; transform: translateY(-80px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes slideInBottom {
+            from { opacity: 0; transform: translateY(80px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes floatGlow {
+            0% { transform: translate(0, 0) scale(1); opacity: 0.1; }
+            50% { transform: translate(30px, 30px) scale(1.1); opacity: 0.2; }
+            100% { transform: translate(0, 0) scale(1); opacity: 0.1; }
+        }
+
+        @keyframes scaleIn {
+            from { opacity: 0; transform: scale(0.6); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        @keyframes cardSlideUp {
+            from { opacity: 0; transform: translateY(50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes drawLine {
+            from { transform: scaleY(0); }
+            to { transform: scaleY(1); }
+        }
+
+        @keyframes slideInFromSide {
+            from { opacity: 0; }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        @keyframes popIn {
+            from { opacity: 0; transform: scale(0); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .hero-title {
+                font-size: 3.8em;
+            }
+            .hero-subtitle {
+                font-size: 1.7em;
+            }
+            .section-title {
+                font-size: 3em;
+            }
+            .content-section {
+                padding: 60px 40px;
+            }
+            .skills-grid {
+                grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+                gap: 30px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 20px 15px;
+            }
+            .hero-section {
+                padding: 90px 20px;
+            }
+            .hero-title {
+                font-size: 3em;
+                letter-spacing: 1px;
+            }
+            .hero-subtitle {
+                font-size: 1.5em;
+            }
+            .hero-description {
+                font-size: 1.1em;
+            }
+            .section-title {
+                font-size: 2.5em;
+                margin-bottom: 35px;
+            }
+            .about-text {
+                font-size: 1.1em;
+            }
+            .skills-grid {
+                grid-template-columns: 1fr; /* Single column on mobile */
+                gap: 25px;
+            }
+            .skill-card {
+                padding: 30px;
+            }
+            .skill-card h3 {
+                font-size: 1.8em;
+            }
+            .skill-card ul li {
+                font-size: 1.05em;
+            }
+
+            .experience-timeline::before {
+                left: 20px;
+                margin-left: 0;
+            }
+            .timeline-item {
+                width: 100%;
+                padding-left: 50px;
+                padding-right: 15px;
+                text-align: left;
+                left: 0;
+                transform: translateX(0) !important; /* Override specific animation for mobile */
+            }
+            .timeline-item::after {
+                left: 10px;
+                right: auto;
+            }
+            .timeline-content {
+                padding: 30px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-section {
+                padding: 70px 15px;
+            }
+            .hero-title {
+                font-size: 2.5em;
+            }
+            .hero-subtitle {
+                font-size: 1.2em;
+            }
+            .content-section {
+                padding: 50px 15px;
+            }
+            .section-title {
+                font-size: 2em;
+            }
+            .skill-card h3 {
+                font-size: 1.6em;
+            }
+            .timeline-content h3 {
+                font-size: 1.5em;
+            }
+            .timeline-content h4 {
+                font-size: 1.1em;
+            }
+        }
+    </style>
 </head>
 <body>
-    Welcome to Madinina
+    <div class="container">
+        <header class="hero-section">
+            <div class="hero-content">
+                <h1 class="hero-title">Slorane CRUSOL</h1>
+                <p class="hero-subtitle">Designer Graphiste & Experte IA & Développement Front-End & Back-End</p>
+                <p class="hero-description">
+                    Avec 3 ans d'expérience dans le domaine du digital, je suis une force motrice derrière des solutions numériques innovantes et esthétiques. Ma passion réside dans la création d'expériences qui marient l'art et la science.
+                </p>
+            </div>
+        </header>
+
+        <section class="content-section about-me">
+            <h2 class="section-title">À Propos de Moi</h2>
+            <p class="about-text">
+                Je suis <strong>Slorane CRUSOL</strong>, une professionnelle du digital passionnée par la convergence de la créativité et de la technologie. Forte de <strong>trois années d'expérience</strong>, j'excelle dans la conception visuelle percutante, la modélisation d'intelligences artificielles avancées, et la construction d'architectures web complètes. Mon parcours m'a permis de développer une approche holistique, où chaque projet est une opportunité de fusionner l'esthétique avec la fonctionnalité, garantissant des expériences utilisateur exceptionnelles et des systèmes robustes.
+            </p>
+            <p class="about-text">
+                Ma polyvalence en <strong>Front-End et Back-End</strong> me permet de superviser l'intégralité du cycle de vie d'un produit numérique, de l'idée initiale à son déploiement. Je m'engage à rester à la pointe des innovations pour offrir des solutions qui non seulement répondent aux besoins actuels, mais anticipent également les défis de demain. Mon objectif est de transformer des idées complexes en réalisations concrètes et impactantes.
+            </p>
+        </section>
+
+        <section class="content-section skills">
+            <h2 class="section-title">Mes Compétences</h2>
+            <div class="skills-grid">
+                <div class="skill-card">
+                    <h3>Design Graphique & UI/UX</h3>
+                    <ul>
+                        <li>Conception d'Identité Visuelle</li>
+                        <li>UI/UX Design (Figma, Sketch, Adobe XD)</li>
+                        <li>Infographie & Illustration</li>
+                        <li>Web Design Responsive</li>
+                        <li>Prototypage & Wireframing</li>
+                    </ul>
+                </div>
+                <div class="skill-card">
+                    <h3>Intelligence Artificielle</h3>
+                    <ul>
+                        <li>Machine Learning & Deep Learning</li>
+                        <li>Traitement du Langage Naturel (NLP)</li>
+                        <li>Vision par Ordinateur</li>
+                        <li>Développement de Modèles Prédictifs</li>
+                        <li>Analyse de Données & Visualisation</li>
+                    </ul>
+                </div>
+                <div class="skill-card">
+                    <h3>Développement Front-End</h3>
+                    <ul>
+                        <li>HTML5, CSS3, JavaScript (ES6+)</li>
+                        <li>Frameworks JS (React.js, Vue.js)</li>
+                        <li>Animations CSS & Transitions</li>
+                        <li>Optimisation des Performances Web</li>
+                        <li>Intégration d'API RESTful</li>
+                    </ul>
+                </div>
+                <div class="skill-card">
+                    <h3>Développement Back-End</h3>
+                    <ul>
+                        <li>Node.js (Express), Python (Django, Flask)</li>
+                        <li>Bases de Données (SQL, NoSQL)</li>
+                        <li>API RESTful & Microservices</li>
+                        <li>Authentification & Sécurité</li>
+                        <li>Déploiement & Cloud (AWS, Azure)</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section class="content-section experience">
+            <h2 class="section-title">Mon Expérience Professionnelle</h2>
+            <div class="experience-timeline">
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <h3>Directrice de l'Innovation Digitale</h3>
+                        <h4>Visionary Tech Corp</h4>
+                        <span class="date">Janvier 2024 - Présent</span>
+                        <p>
+                            À la tête des initiatives de R&D, j'ai dirigé le développement de plateformes basées sur l'IA, augmentant l'efficacité opérationnelle de 40%. J'ai supervisé des équipes multidisciplinaires, de la conception à l'implémentation, en garantissant l'alignement stratégique et l'innovation continue.
+                        </p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <h3>Architecte Full-Stack & Spécialiste IA</h3>
+                        <h4>Innovate Digital Solutions</h4>
+                        <span class="date">Juin 2022 - Décembre 2023</span>
+                        <p>
+                            Conception et implémentation d'architectures logicielles complexes pour des applications web à grande échelle. J'ai intégré des modèles d'apprentissage automatique pour personnaliser l'expérience utilisateur et automatiser des tâches critiques, réduisant les coûts de 20%.
+                        </p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <h3>Designer Graphique Senior & Développeuse Front-End</h3>
+                        <h4>Creative Pixel Agency</h4>
+                        <span class="date">Juillet 2021 - Mai 2022</span>
+                        <p>
+                            Responsable de la création d'identités visuelles percutantes et de l'intégration Front-End pour des sites web et applications mobiles. J'ai optimisé les parcours utilisateurs et amélioré l'engagement client grâce à des designs intuitifs et des interfaces réactives.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
 </body>
 </html>
